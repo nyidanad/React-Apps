@@ -1,0 +1,42 @@
+[
+  {
+    "value": "CSS",
+    "label": "CSS"
+  },
+  {
+    "value": "HTML",
+    "label": "HTML"
+  },
+  {
+    "value": "JavaScript",
+    "label": "JavaScript"
+  },
+  {
+    "value": "TypeScript",
+    "label": "TypeScript"
+  },
+  {
+    "value": "React",
+    "label": "React"
+  },
+  {
+    "value": "Angular",
+    "label": "Angular"
+  },
+  {
+    "value": "NodeJs",
+    "label": "NodeJs"
+  },
+  {
+    "value": "ExpressJs",
+    "label": "ExpressJs"
+  },
+  {
+    "value": "Bootstrap5",
+    "label": "Bootstrap5"
+  },
+  {
+    "value": "Tailwind",
+    "label": "Tailwind"
+  }
+]
