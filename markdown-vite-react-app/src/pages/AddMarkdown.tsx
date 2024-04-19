@@ -22,9 +22,11 @@ function AddMarkdown({ onSubmit, onAddTag, availableTags }: AddMarkdownProps) {
 
     onSubmit({
       title: titleRef.current!.value,    // nem lehet null, mivel 'required'
-      markdown: bodyRef.current!.value,  // nem lehet null, mivel 'required'
-      tags: selectedTags
+      text: bodyRef.current!.value,  // nem lehet null, mivel 'required'
+      tags: selectedTags,
     })
+
+    navigate("/");
   }
 
   return (

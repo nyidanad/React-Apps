@@ -1,8 +1,6 @@
 
 
-type Props = {}
-
-function MarkdownForm({}: Props) {
+function MarkdownForm() {
   return (
     <div>MarkdownForm</div>
   )

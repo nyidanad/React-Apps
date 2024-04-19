@@ -9,7 +9,6 @@ import { Container } from "react-bootstrap"
 import { v4 as uuidV4 } from "uuid"
 
 
-
 export type Note = {
   id: string,
 } & NoteData
@@ -20,13 +19,13 @@ export type RawNote = {
 
 export type RawNoteData = {
   title: string
-  markdown: string
+  text: string
   tagIds: string[]
 }
 
 export type NoteData = {
   title: string
-  markdown: string
+  text: string
   tags: Tag[]
 }
 
@@ -41,6 +40,7 @@ function App() {
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
 
   // CACHE NOTES
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const noteWithTags = useMemo(() => {
     return notes.map(note => {
       return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
@@ -63,13 +63,13 @@ function App() {
   return (
     <Container className="mb-4">  
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home availableTags={tags} notes={noteWithTags} />}/>
         <Route path="/add" element={<AddMarkdown onSubmit={onCreateNote} onAddTag={onAddTag} availableTags={tags} />}/>
         <Route path="/:id">
           <Route index element={<ShowMarkdown />} />
           <Route path="edit" element={<EditMarkdown />} />
         </Route>
-        <Route path="*" element={<Home />}/>
+        <Route path="*" element={<Home availableTags={tags} notes={noteWithTags} />}/>
       </Routes>
     </Container>
   )

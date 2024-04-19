@@ -1,14 +1,15 @@
 import { Card } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
+import { Tag } from "../App";
 
 type MarkdownProps = {
-  id: number,
+  id: string,
   title: string,
-  tags?: string[],
+  tags?: Tag[],
   text: string,
 }
 
-export function Markdown({ id, title, tags, text }: MarkdownProps) {
+export function Markdown({ id, title, text, tags  }: MarkdownProps) {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +20,7 @@ export function Markdown({ id, title, tags, text }: MarkdownProps) {
           <div>
             { tags && tags.length > 0 ? (
                 tags.map((tag, index) => (
-                  <span key={index} className="badge text-bg-primary" style={{ fontSize: "0.65rem", marginRight: "0.15rem" }}>{tag}</span>
+                  <span key={index} className="badge text-bg-primary" style={{ fontSize: "0.65rem", marginRight: "0.15rem" }}>{tag.label}</span>
                 ))
               ) : null
             }
