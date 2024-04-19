@@ -1,15 +1,20 @@
-import MarkdownForm from "../components/MarkdownForm"
+import { Navigate, Outlet, useOutletContext, useParams } from "react-router-dom"
+import { Note } from "../App"
 
-
-type Props = {}
-
-function ShowMarkdown({}: Props) {
-  return (
-    <>
-      <div>ShowMarkdown</div>
-      <MarkdownForm />
-    </>
-  )
+type ShowMarkdownProps = {
+  notes: Note[]
 }
 
-export default ShowMarkdown
+export function ShowMarkdown({ notes }: ShowMarkdownProps) {
+  const { id } = useParams();
+  const note = notes.find(n => n.id === id);
+
+  if (note == null)
+    return <Navigate to="/" replace />
+
+  return <Outlet context={note} />
+}
+
+export function useNote() {
+  return useOutletContext<Note>()
+}

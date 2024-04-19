@@ -25,15 +25,15 @@ function Home({ availableTags, notes }: NoteListProps) {
   const filteredNotes = useMemo(() => {
     return notes.filter(note => {
       return (title === "" || note.title.toLowerCase().includes(title.toLowerCase())) 
-      &&  (selectedTags.length === 0 || selectedTags.every(tag => note.tags.some(noteTag => noteTag.id === tag.id)))
+      && (selectedTags.length === 0 || selectedTags.every(tag => note.tags.some(noteTag => noteTag.id === tag.id)))
     })
   }, [title, selectedTags, notes])
 
   return (
     <>
-      <Row className='d-flex justify-content-between align-items-center mt-4 mb-5'>
-        <Col md={2}>
-          <h3>My Files</h3>
+      <Row className='d-flex justify-content-between align-items-center mb-4'>
+        <Col md={2} >
+          <img src="src/assets/markdown-logo.png" alt="markdown-logo.png" style={{ width: '5rem' }} />
         </Col>
         <Col>
           <div className="input-group">
@@ -66,7 +66,7 @@ function Home({ availableTags, notes }: NoteListProps) {
             }}
           />
         </Col>
-        <Col md={3}>
+        <Col xs="auto" md={3}>
           <Stack className="float-end" gap={2} direction="horizontal">
             <Button className="align-baseline" variant="primary" onClick={() => navigate('/add')}>Create File</Button>
             <Button variant="outline-secondary" onClick={() => {}}>Edit Tags</Button>
@@ -75,6 +75,9 @@ function Home({ availableTags, notes }: NoteListProps) {
       </Row>
       <Row className="mb-4">
         
+      </Row>
+      <Row className="mb-3">
+        <h3>My Files</h3>
       </Row>
       <Row xs={1} sm={2} md={3} lg={4} className='g-3'>
         {filteredNotes.map(note => (

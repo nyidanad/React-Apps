@@ -2,8 +2,9 @@ import { useMemo } from "react"
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import AddMarkdown from "./pages/AddMarkdown"
-import ShowMarkdown from "./pages/ShowMarkdown"
+import { ShowMarkdown } from "./pages/ShowMarkdown"
 import EditMarkdown from "./pages/EditMarkdown"
+import MarkdownForm from "./components/MarkdownForm"
 import useLocalStorage from "./hooks/useLocalStorage"
 import { Container } from "react-bootstrap"
 import { v4 as uuidV4 } from "uuid"
@@ -40,7 +41,6 @@ function App() {
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
 
   // CACHE NOTES
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const noteWithTags = useMemo(() => {
     return notes.map(note => {
       return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
@@ -61,12 +61,12 @@ function App() {
 
 
   return (
-    <Container className="mb-4">  
+    <Container className="my-4">  
       <Routes>
         <Route path="/" element={<Home availableTags={tags} notes={noteWithTags} />}/>
         <Route path="/add" element={<AddMarkdown onSubmit={onCreateNote} onAddTag={onAddTag} availableTags={tags} />}/>
-        <Route path="/:id">
-          <Route index element={<ShowMarkdown />} />
+        <Route path="/:id" element={<ShowMarkdown notes={noteWithTags} />}>
+          <Route index element={<MarkdownForm />} />
           <Route path="edit" element={<EditMarkdown />} />
         </Route>
         <Route path="*" element={<Home availableTags={tags} notes={noteWithTags} />}/>

@@ -1,6 +1,7 @@
 import { Card } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
 import { Tag } from "../App";
+import styles from "../css/Markdown.module.css"
 
 type MarkdownProps = {
   id: string,
@@ -13,7 +14,7 @@ export function Markdown({ id, title, text, tags  }: MarkdownProps) {
   const navigate = useNavigate();
 
   return (
-    <Card className='h-100' onClick={() => navigate(`/${id}`)}>
+    <Card className={`h-100 ${styles.card}`} onClick={() => navigate(`/${id}`)}>
       <Card.Body>
         <Card.Title className='mb-4'>
           <div className='fs-4 text-align-center'>{title}</div>
@@ -24,7 +25,6 @@ export function Markdown({ id, title, text, tags  }: MarkdownProps) {
                 ))
               ) : null
             }
-          
           </div>
           <div className='fs-6 mt-2 text-muted'>
             {text.length > 100 ? <div>{text.slice(0, 97)}...</div> : <div>{text}</div> }
