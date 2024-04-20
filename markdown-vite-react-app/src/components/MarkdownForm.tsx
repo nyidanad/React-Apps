@@ -3,7 +3,11 @@ import { useNote } from "../pages/ShowMarkdown"
 import { useNavigate } from "react-router-dom"
 import ReactMarkdown from "react-markdown"
 
-function MarkdownForm() {
+type MarkdownFormProps = {
+  onDeleteNote: (id: string) => void
+}
+
+function MarkdownForm({ onDeleteNote }: MarkdownFormProps) {
   const navigate = useNavigate();
   const note = useNote()
 
@@ -22,7 +26,7 @@ function MarkdownForm() {
         <Col xs="auto">
           <Stack className="float-end" gap={2} direction="horizontal">
             <Button className="align-baseline" variant="outline-warning" onClick={() => navigate(`/${note.id}/edit`)}>Edit</Button>
-            <Button variant="outline-danger" onClick={() => {}}>Delete</Button>
+            <Button variant="outline-danger" onClick={() => {onDeleteNote(note.id)}}>Delete</Button>
             <Button variant="outline-secondary" onClick={() => {navigate("/")}}>Back</Button>
           </Stack>
         </Col>

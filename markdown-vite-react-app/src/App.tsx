@@ -52,7 +52,28 @@ function App() {
     setNotes(prevNotes => {
       return [...prevNotes, { ...data, id: uuidV4(), tagIds: tags.map(tag => tag.id) }]
     })
-  } 
+  }
+
+  // UPDATE NOTE
+  const onUpdateNote = (id: string, { tags, ...data }: NoteData) => {
+    setNotes(prevNotes => {
+      return prevNotes.map(note => {
+        if (note.id === id) {
+          return { ...note, ...data, tagIds: tags.map(tag => tag.id) }
+        }
+        else {
+          return note
+        }
+      })
+    })
+  }
+
+  // DELETE NOTE
+  const onDeleteNote = (id: string) => {
+    setNotes(prevNotes => {
+      return prevNotes.filter(note => note.id !== id);
+    })
+  }
 
   // ADD TAG
   const onAddTag = (tag: Tag) => {
@@ -66,8 +87,8 @@ function App() {
         <Route path="/" element={<Home availableTags={tags} notes={noteWithTags} />}/>
         <Route path="/add" element={<AddMarkdown onSubmit={onCreateNote} onAddTag={onAddTag} availableTags={tags} />}/>
         <Route path="/:id" element={<ShowMarkdown notes={noteWithTags} />}>
-          <Route index element={<MarkdownForm />} />
-          <Route path="edit" element={<EditMarkdown />} />
+          <Route index element={<MarkdownForm onDeleteNote={onDeleteNote} />} />
+          <Route path="edit" element={<EditMarkdown onSubmit={onUpdateNote} onAddTag={onAddTag} availableTags={tags} />} />
         </Route>
         <Route path="*" element={<Home availableTags={tags} notes={noteWithTags} />}/>
       </Routes>
