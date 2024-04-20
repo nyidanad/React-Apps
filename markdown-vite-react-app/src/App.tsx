@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import Home from "./pages/Home"
 import AddMarkdown from "./pages/AddMarkdown"
 import { ShowMarkdown } from "./pages/ShowMarkdown"
@@ -80,17 +80,38 @@ function App() {
     setTags(prev => [...prev, tag])
   }
 
+  // EDIT TAG
+  const onUpdateTag = (id: string, label: string) => {
+    setTags(prevTags => {
+      return prevTags.map(tag => {
+        if (tag.id === id) {
+          return { ...tag, label }
+        }
+        else {
+          return tag
+        }
+      })
+    })
+  }
+
+  // DELETE TAG
+  const onDeleteTag = (id: string) => {
+    setTags(prevTags => {
+      return prevTags.filter(tag => tag.id !== id);
+    })
+  }
+
 
   return (
     <Container className="my-4">  
       <Routes>
-        <Route path="/" element={<Home availableTags={tags} notes={noteWithTags} />}/>
+        <Route path="/" element={<Home availableTags={tags} notes={noteWithTags} onUpdateTag={onUpdateTag} onDeleteTag={onDeleteTag} />}/>
         <Route path="/add" element={<AddMarkdown onSubmit={onCreateNote} onAddTag={onAddTag} availableTags={tags} />}/>
         <Route path="/:id" element={<ShowMarkdown notes={noteWithTags} />}>
           <Route index element={<MarkdownForm onDeleteNote={onDeleteNote} />} />
           <Route path="edit" element={<EditMarkdown onSubmit={onUpdateNote} onAddTag={onAddTag} availableTags={tags} />} />
         </Route>
-        <Route path="*" element={<Home availableTags={tags} notes={noteWithTags} />}/>
+        <Route path="*" element={<Navigate to="/" />}/>
       </Routes>
     </Container>
   )

@@ -4,6 +4,7 @@ import ReactSelect from "react-select";
 import Markdown from "../components/Markdown";
 import { useMemo, useState } from "react";
 import { Tag } from "../App";
+import EditTagModal from "../components/EditTagModal";
 
 type SimplifiedNote = {
   id: string
@@ -12,15 +13,18 @@ type SimplifiedNote = {
   tags: Tag[]
 }
 
-type NoteListProps = {
+type HomeProps = {
   availableTags: Tag[]
   notes: SimplifiedNote[]
+  onUpdateTag: (id: string, label: string) => void
+  onDeleteTag: (id: string) => void
 }
 
-function Home({ availableTags, notes }: NoteListProps) {
+function Home({ availableTags, notes, onUpdateTag, onDeleteTag }: HomeProps) {
   const navigate = useNavigate();
   const [title, setTitle] = useState("")
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [showModal, setShowModal] = useState(false)
 
   const filteredNotes = useMemo(() => {
     return notes.filter(note => {
@@ -69,7 +73,7 @@ function Home({ availableTags, notes }: NoteListProps) {
         <Col xs="auto" md={3}>
           <Stack className="float-end" gap={2} direction="horizontal">
             <Button className="align-baseline" variant="primary" onClick={() => navigate('/add')}>Create File</Button>
-            <Button variant="outline-secondary" onClick={() => {}}>Edit Tags</Button>
+            <Button variant="outline-secondary" onClick={() => setShowModal(true)}>Edit Tags</Button>
           </Stack>
         </Col>
       </Row>
@@ -84,6 +88,7 @@ function Home({ availableTags, notes }: NoteListProps) {
           <Col key={note.id}><Markdown id={note.id} title={note.title} tags={note.tags} text={note.text} /></Col>
         ))}
       </Row>
+      <EditTagModal availableTags={availableTags} show={showModal} handleModal={() => setShowModal(false)} onUpdateTag={onUpdateTag} onDeleteTag={onDeleteTag}  />
     </>
   )
 }
